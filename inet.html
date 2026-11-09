@@ -1,0 +1,484 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SeaU café</title>
+<style>
+:root {
+  --green:#315b4c;
+  --cream:#f7f3e9;
+  --orange:#d99b65;
+  --ink:#27352f;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:Arial,"Noto Sans Thai",sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+}
+header {
+  background:var(--green);
+  color:white;
+  padding:22px 5%;
+}
+.top {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.logo { font-size:28px; font-weight:800; letter-spacing:1px; }
+.tagline { font-size:13px; opacity:.85; margin-top:4px; }
+select,button { font:inherit; }
+select {
+  padding:10px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  background:white;
+}
+.hero {
+  padding:42px 5%;
+  background:linear-gradient(120deg,#e9d9bd,#f8eee0);
+}
+.hero h1 { font-size:clamp(30px,6vw,48px); margin:0 0 10px; }
+.hero p { max-width:600px; line-height:1.7; }
+main { max-width:1100px; margin:auto; padding:24px 16px 60px; }
+.section-title { margin:26px 0 14px; }
+.tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+button {
+  border:0;
+  border-radius:12px;
+  padding:11px 15px;
+  cursor:pointer;
+}
+.primary { background:var(--green); color:white; }
+.secondary { background:#e7e1d5; color:var(--ink); }
+.active { background:var(--orange); color:#241b13; }
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:15px;
+}
+.card {
+  background:white;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 3px 14px #0000000c;
+}
+.food-pic {
+  height:125px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  font-size:64px;
+  background:linear-gradient(135deg,#f4e5cf,#e8d3b4);
+}
+.card h3 { margin:12px 0 5px; }
+.price { color:var(--green); font-weight:bold; margin:8px 0; }
+.card select { width:100%; margin:5px 0; }
+.card button { width:100%; margin-top:8px; }
+.panel {
+  background:white;
+  padding:18px;
+  border-radius:18px;
+  margin-top:22px;
+  box-shadow:0 3px 14px #0000000c;
+}
+.tables {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:9px;
+  margin-top:12px;
+}
+.table-btn { background:#e7e1d5; }
+.table-btn.chosen { background:var(--green); color:white; }
+.table-btn:disabled { opacity:.4; cursor:not-allowed; }
+.cart-row {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid #eee;
+  padding:10px 0;
+}
+.small { font-size:13px; color:#66736c; }
+.total { font-size:22px; font-weight:bold; }
+input {
+  padding:11px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  width:100%;
+  margin:7px 0;
+}
+footer {
+  background:var(--green);
+  color:white;
+  padding:25px;
+  text-align:center;
+}
+.hidden { display:none !important; }
+@media(max-width:520px) {
+  .tables { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  header { padding:18px 5%; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="top">
+    <div>
+      <div class="logo">SeaU café ☕</div>
+      <div class="tagline" id="tagline">Good food, good mood.</div>
+    </div>
+    <select id="language" aria-label="Choose language">
+      <option value="th">🇹🇭 ไทย</option>
+      <option value="lo">🇱🇦 ລາວ</option>
+      <option value="zh">🇨🇳 中文</option>
+      <option value="en">🇬🇧 English</option>
+      <option value="ko">🇰🇷 한국어</option>
+    </select>
+  </div>
+</header>
+
+<section class="hero">
+  <h1 id="welcome">ยินดีต้อนรับสู่ SeaU café</h1>
+  <p id="intro">เลือกอาหาร เครื่องดื่ม และขนมที่ชอบ แล้วเราจะนำไปเสิร์ฟให้ถึงโต๊ะของคุณ</p>
+</section>
+
+<main>
+  <h2 class="section-title" id="menuTitle">เมนูของเรา</h2>
+  <div class="tabs">
+    <button class="active" data-category="food" id="foodTab">🍛 อาหาร</button>
+    <button class="secondary" data-category="drink" id="drinkTab">🥤 เครื่องดื่ม</button>
+    <button class="secondary" data-category="dessert" id="dessertTab">🍰 ของหวาน</button>
+  </div>
+  <div class="grid" id="menu"></div>
+
+  <section class="panel">
+    <h2 id="seatTitle">📍 เลือกที่นั่ง</h2>
+    <p id="seatHint">เลือกโซนและโต๊ะที่ต้องการ</p>
+    <select id="zone">
+      <option value="inside" id="insideOption">ภายในร้าน</option>
+      <option value="outside" id="outsideOption">ภายนอกร้าน</option>
+    </select>
+    <div class="tables" id="tables"></div>
+    <p id="selectedTable" class="small">ยังไม่ได้เลือกโต๊ะ</p>
+  </section>
+
+  <section class="panel">
+    <h2 id="cartTitle">🛒 ตะกร้าของฉัน</h2>
+    <div id="cart"></div>
+    <p class="total"><span id="totalLabel">รวม</span>: <span id="total">0</span> ₭</p>
+    <h3 id="paymentTitle">วิธีชำระเงิน</h3>
+    <select id="payment">
+      <option value="cash" id="cashOption">เงินสดเมื่อพนักงานนำอาหารมาให้</option>
+      <option value="online" id="onlineOption">ชำระออนไลน์ (ทดลองเท่านั้น)</option>
+    </select>
+    <button class="primary" id="orderButton">ยืนยันการสั่งซื้อ</button>
+    <p class="small" id="paymentNote">การชำระออนไลน์ในตัวอย่างนี้ยังไม่ใช่การจ่ายเงินจริง</p>
+  </section>
+
+  <section class="panel">
+    <h2 id="rewardTitle">⭐ แต้มสะสม</h2>
+    <p><span id="pointLabel">แต้มของคุณ</span>: <strong id="points">0</strong></p>
+    <p class="small" id="rewardHint">รับ 1 แต้มต่อยอดใช้จ่ายทุก 10,000 กีบ สะสม 20 แต้มแลกสมูทตี้ตัวอย่างได้</p>
+    <button class="secondary" id="redeemButton">แลกสมูทตี้ 20 แต้ม</button>
+  </section>
+
+  <section class="panel">
+    <h2 id="staffTitle">🔐 หน้าพนักงาน</h2>
+    <p class="small" id="staffHint">ดูออร์เดอร์ที่บันทึกไว้ในเบราว์เซอร์เครื่องนี้</p>
+    <button class="secondary" id="staffButton">เปิดหน้าพนักงาน</button>
+    <div id="staffArea" class="hidden"></div>
+  </section>
+
+  <section class="panel">
+    <h2 id="helpTitle">💬 ติดต่อร้าน</h2>
+    <p id="helpText">หากมีปัญหาเกี่ยวกับออร์เดอร์ โปรดแจ้งพนักงานประจำร้าน</p>
+    <input id="problem" placeholder="พิมพ์ข้อความแจ้งปัญหา">
+    <button class="secondary" id="helpButton">ส่งข้อความ</button>
+    <p id="helpResult" class="small"></p>
+  </section>
+</main>
+
+<footer>SeaU café · Thank you for visiting us ♡</footer>
+
+<script>
+const translations = {
+ th:{
+  welcome:"ยินดีต้อนรับสู่ SeaU café",
+  intro:"เลือกอาหาร เครื่องดื่ม และขนมที่ชอบ แล้วเราจะนำไปเสิร์ฟให้ถึงโต๊ะของคุณ",
+  menu:"เมนูของเรา",food:"🍛 อาหาร",drink:"🥤 เครื่องดื่ม",dessert:"🍰 ของหวาน",
+  add:"เพิ่มลงตะกร้า",seat:"📍 เลือกที่นั่ง",seatHint:"เลือกโซนและโต๊ะที่ต้องการ",
+  inside:"ภายในร้าน",outside:"ภายนอกร้าน",notSelected:"ยังไม่ได้เลือกโต๊ะ",
+  cart:"🛒 ตะกร้าของฉัน",total:"รวม",payment:"วิธีชำระเงิน",
+  cash:"เงินสดเมื่อพนักงานนำอาหารมาให้",online:"ชำระออนไลน์ (ทดลองเท่านั้น)",
+  order:"ยืนยันการสั่งซื้อ",note:"การชำระออนไลน์ในตัวอย่างนี้ยังไม่ใช่การจ่ายเงินจริง",
+  reward:"⭐ แต้มสะสม",points:"แต้มของคุณ",
+  rewardHint:"รับ 1 แต้มต่อยอดใช้จ่ายทุก 10,000 กีบ สะสม 20 แต้มแลกสมูทตี้ตัวอย่างได้",
+  redeem:"แลกสมูทตี้ 20 แต้ม",staff:"🔐 หน้าพนักงาน",
+  staffHint:"ดูออร์เดอร์ที่บันทึกไว้ในเบราว์เซอร์เครื่องนี้",
+  staffOpen:"เปิดหน้าพนักงาน",help:"💬 ติดต่อร้าน",
+  helpText:"หากมีปัญหาเกี่ยวกับออร์เดอร์ โปรดแจ้งพนักงานประจำร้าน",
+  problem:"พิมพ์ข้อความแจ้งปัญหา",send:"ส่งข้อความ",
+  choose:"กรุณาเลือกโต๊ะก่อนสั่งอาหาร",empty:"ยังไม่มีสินค้าในตะกร้า",
+  success:"รับออร์เดอร์แล้ว! แต้มของคุณเพิ่มขึ้น",
+  redeemNo:"แต้มไม่เพียงพอ",redeemYes:"แลกสมูทตี้สำเร็จ",
+  remove:"ลบ",status:"สถานะ",update:"อัปเดต",
+  received:"รับออร์เดอร์แล้ว",preparing:"กำลังเตรียม",ready:"พร้อมเสิร์ฟ",served:"เสิร์ฟแล้ว",
+  sent:"ส่งข้อความแล้ว (ตัวอย่าง)",chooseOption:"เลือกตัวเลือก"
+ },
+ lo:{
+  welcome:"ຍິນດີຕ້ອນຮັບສູ່ SeaU café",
+  intro:"ເລືອກອາຫານ ເຄື່ອງດື່ມ ແລະ ຂອງຫວານ ແລ້ວພວກເຮົາຈະນຳໄປສົ່ງທີ່ໂຕະ",
+  menu:"ເມນູຂອງພວກເຮົາ",food:"🍛 ອາຫານ",drink:"🥤 ເຄື່ອງດື່ມ",dessert:"🍰 ຂອງຫວານ",
+  add:"ເພີ່ມໃສ່ກະຕ່າ",seat:"📍 ເລືອກບ່ອນນັ່ງ",seatHint:"ເລືອກເຂດ ແລະ ໂຕະ",
+  inside:"ພາຍໃນຮ້ານ",outside:"ພາຍນອກຮ້ານ",notSelected:"ຍັງບໍ່ໄດ້ເລືອກໂຕະ",
+  cart:"🛒 ກະຕ່າຂອງຂ້ອຍ",total:"ລວມ",payment:"ວິທີຊຳລະເງິນ",
+  cash:"ເງິນສົດເມື່ອພະນັກງານນຳອາຫານມາໃຫ້",online:"ຊຳລະອອນລາຍ (ທົດລອງ)",
+  order:"ຢືນຢັນການສັ່ງ",note:"ການຊຳລະອອນລາຍໃນຕົວຢ່າງນີ້ບໍ່ແມ່ນການຈ່າຍຈິງ",
+  reward:"⭐ ຄະແນນສະສົມ",points:"ຄະແນນຂອງທ່ານ",
+  rewardHint:"ຮັບ 1 ຄະແນນຕໍ່ການໃຊ້ຈ່າຍ 10,000 ກີບ; 20 ຄະແນນແລກສະມູດຕີ້",
+  redeem:"ແລກສະມູດຕີ້ 20 ຄະແນນ",staff:"🔐 ໜ້າພະນັກງານ",
+  staffHint:"ເບິ່ງລາຍການສັ່ງໃນບຣາວເຊີນີ້",staffOpen:"ເປີດໜ້າພະນັກງານ",
+  help:"💬 ຕິດຕໍ່ຮ້ານ",helpText:"ຖ້າມີບັນຫາກັບລາຍການສັ່ງ ກະລຸນາແຈ້ງພະນັກງານ",
+  problem:"ພິມຂໍ້ຄວາມແຈ້ງບັນຫາ",send:"ສົ່ງຂໍ້ຄວາມ",
+  choose:"ກະລຸນາເລືອກໂຕະກ່ອນສັ່ງ",empty:"ຍັງບໍ່ມີສິນຄ້າ",
+  success:"ຮັບລາຍການແລ້ວ! ຄະແນນເພີ່ມຂຶ້ນ",
+  redeemNo:"ຄະແນນບໍ່ພຽງພໍ",redeemYes:"ແລກສະມູດຕີ້ສຳເລັດ",
+  remove:"ລຶບ",status:"ສະຖານະ",update:"ອັບເດດ",
+  received:"ຮັບລາຍການແລ້ວ",preparing:"ກຳລັງກຽມ",ready:"ພ້ອມເສີບ",served:"ເສີບແລ້ວ",
+  sent:"ສົ່ງຂໍ້ຄວາມແລ້ວ (ຕົວຢ່າງ)",chooseOption:"ເລືອກຕົວເລືອກ"
+ },
+ zh:{
+  welcome:"欢迎来到 SeaU café",
+  intro:"选择喜欢的美食、饮料和甜点，我们会送到您的餐桌。",
+  menu:"我们的菜单",food:"🍛 美食",drink:"🥤 饮料",dessert:"🍰 甜点",
+  add:"加入购物车",seat:"📍 选择座位",seatHint:"请选择区域和桌号",
+  inside:"室内",outside:"室外",notSelected:"尚未选择桌位",
+  cart:"🛒 我的购物车",total:"总计",payment:"付款方式",
+  cash:"服务员送餐时现金支付",online:"在线支付（仅供演示）",
+  order:"确认订单",note:"此演示中的在线支付不是真实付款",
+  reward:"⭐ 积分奖励",points:"您的积分",
+  rewardHint:"每消费10,000基普获得1积分，20积分可兑换示例冰沙",
+  redeem:"兑换冰沙（20积分）",staff:"🔐 员工页面",
+  staffHint:"查看保存在此浏览器中的订单",staffOpen:"打开员工页面",
+  help:"💬 联系咖啡馆",helpText:"如果订单有问题，请联系店员",
+  problem:"输入问题",send:"发送消息",choose:"请先选择桌位",empty:"购物车为空",
+  success:"订单已收到！积分已增加",redeemNo:"积分不足",redeemYes:"兑换成功",
+  remove:"删除",status:"状态",update:"更新",received:"已接单",preparing:"准备中",ready:"可以上菜",served:"已送达",
+  sent:"消息已发送（演示）",chooseOption:"选择选项"
+ },
+ en:{
+  welcome:"Welcome to SeaU café",
+  intro:"Choose your favorite food, drinks and desserts. We will serve them at your table.",
+  menu:"Our Menu",food:"🍛 Food",drink:"🥤 Drinks",dessert:"🍰 Desserts",
+  add:"Add to cart",seat:"📍 Choose your seat",seatHint:"Choose an area and a table",
+  inside:"Indoor",outside:"Outdoor",notSelected:"No table selected",
+  cart:"🛒 My Cart",total:"Total",payment:"Payment method",
+  cash:"Cash when staff delivers your order",online:"Online payment (demo only)",
+  order:"Place order",note:"Online payment in this demo is not a real payment",
+  reward:"⭐ Rewards",points:"Your points",
+  rewardHint:"Earn 1 point per 10,000 kip spent. Redeem 20 points for a demo smoothie.",
+  redeem:"Redeem smoothie (20 points)",staff:"🔐 Staff page",
+  staffHint:"View orders saved in this browser",staffOpen:"Open staff page",
+  help:"💬 Contact us",helpText:"If there is a problem with your order, please tell our staff.",
+  problem:"Type your message",send:"Send message",choose:"Please select a table first",
+  empty:"Your cart is empty",success:"Order received! Your points have increased",
+  redeemNo:"Not enough points",redeemYes:"Smoothie redeemed",
+  remove:"Remove",status:"Status",update:"Update",received:"Received",preparing:"Preparing",ready:"Ready to serve",served:"Served",
+  sent:"Message sent (demo)",chooseOption:"Choose an option"
+ },
+ ko:{
+  welcome:"SeaU café에 오신 것을 환영합니다",
+  intro:"좋아하는 음식, 음료와 디저트를 선택하세요. 테이블까지 가져다드립니다.",
+  menu:"메뉴",food:"🍛 음식",drink:"🥤 음료",dessert:"🍰 디저트",
+  add:"장바구니에 담기",seat:"📍 좌석 선택",seatHint:"구역과 테이블을 선택하세요",
+  inside:"실내",outside:"실외",notSelected:"테이블을 선택하지 않았습니다",
+  cart:"🛒 장바구니",total:"합계",payment:"결제 방법",
+  cash:"직원이 음식을 가져오면 현금 결제",online:"온라인 결제 (데모 전용)",
+  order:"주문하기",note:"이 데모의 온라인 결제는 실제 결제가 아닙니다",
+  reward:"⭐ 적립 포인트",points:"내 포인트",
+  rewardHint:"10,000킵 지출마다 1포인트 적립, 20포인트로 스무디 교환",
+  redeem:"스무디 교환 (20포인트)",staff:"🔐 직원 페이지",
+  staffHint:"이 브라우저에 저장된 주문 확인",staffOpen:"직원 페이지 열기",
+  help:"💬 문의하기",helpText:"주문에 문제가 있으면 직원에게 알려주세요.",
+  problem:"문의 내용을 입력하세요",send:"메시지 보내기",choose:"먼저 테이블을 선택하세요",
+  empty:"장바구니가 비어 있습니다",success:"주문이 접수되었습니다! 포인트가 적립되었습니다",
+  redeemNo:"포인트가 부족합니다",redeemYes:"스무디 교환 완료",
+  remove:"삭제",status:"상태",update:"업데이트",received:"접수 완료",preparing:"준비 중",ready:"서빙 준비 완료",served:"서빙 완료",
+  sent:"메시지를 보냈습니다 (데모)",chooseOption:"옵션 선택"
+ }
+};
+
+const products = [
+ {id:1,cat:"food",emoji:"🍛",price:30000,
+  name:{th:"ข้าวผัดไก่",lo:"ເຂົ້າຜັດໄກ່",zh:"鸡肉炒饭",en:"Chicken fried rice",ko:"치킨 볶음밥"}},
+ {id:2,cat:"food",emoji:"🍳",price:35000,
+  name:{th:"ข้าวกะเพราไก่",lo:"ເຂົ້າກະເພົາໄກ່",zh:"泰式罗勒鸡肉饭",en:"Thai basil chicken rice",ko:"바질 치킨 덮밥"}},
+ {id:3,cat:"food",emoji:"🍜",price:30000,
+  name:{th:"ผัดซีอิ๊ว",lo:"ຜັດຊີອິ້ວ",zh:"泰式酱油炒面",en:"Stir-fried noodles",ko:"간장 볶음면"}},
+ {id:4,cat:"drink",emoji:"🧋",price:20000,
+  name:{th:"ชาไทย",lo:"ຊາໄທ",zh:"泰式奶茶",en:"Thai milk tea",ko:"태국 밀크티"}},
+ {id:5,cat:"drink",emoji:"🍵",price:22000,
+  name:{th:"มัทฉะลาเต้",lo:"ມັດຊະລາເຕ້",zh:"抹茶拿铁",en:"Matcha latte",ko:"말차 라떼"}},
+ {id:6,cat:"drink",emoji:"🥤",price:25000,
+  name:{th:"โกโก้เย็น",lo:"ໂກໂກ້ເຢັນ",zh:"冰可可",en:"Iced cocoa",ko:"아이스 코코아"}},
+ {id:7,cat:"dessert",emoji:"🍰",price:35000,
+  name:{th:"ชีสเค้ก",lo:"ຊີສເຄັກ",zh:"芝士蛋糕",en:"Cheesecake",ko:"치즈케이크"}},
+ {id:8,cat:"dessert",emoji:"🍪",price:18000,
+  name:{th:"คุกกี้ช็อกโกแลต",lo:"ຄຸກກີ້ຊັອກໂກແລັດ",zh:"巧克力曲奇",en:"Chocolate cookies",ko:"초콜릿 쿠키"}},
+ {id:9,cat:"dessert",emoji:"🍫",price:32000,
+  name:{th:"เค้กช็อกโกแลต",lo:"ເຄັກຊັອກໂກແລັດ",zh:"巧克力蛋糕",en:"Chocolate cake",ko:"초콜릿 케이크"}}
+];
+
+let lang="th", category="food", cart=[], selectedTable="";
+let points=Number(localStorage.getItem("seau_points")||0);
+let orders=JSON.parse(localStorage.getItem("seau_orders")||"[]");
+const $=id=>document.getElementById(id);
+const money=n=>Number(n).toLocaleString();
+
+function t(key){return translations[lang][key]||translations.en[key]||key;}
+
+function applyLanguage(){
+ lang=$("language").value;
+ document.documentElement.lang=lang;
+ const ids={
+  welcome:"welcome",intro:"intro",menu:"menuTitle",food:"foodTab",drink:"drinkTab",
+  dessert:"dessertTab",seat:"seatTitle",seatHint:"seatHint",inside:"insideOption",
+  outside:"outsideOption",notSelected:"selectedTable",cart:"cartTitle",total:"totalLabel",
+  payment:"paymentTitle",cash:"cashOption",online:"onlineOption",order:"orderButton",
+  note:"paymentNote",reward:"rewardTitle",points:"pointLabel",rewardHint:"rewardHint",
+  redeem:"redeemButton",staff:"staffTitle",staffHint:"staffHint",staffOpen:"staffButton",
+  help:"helpTitle",helpText:"helpText",send:"helpButton",problem:"problem"
+ };
+ Object.entries(ids).forEach(([key,id])=>{
+  const el=$(id); if(el) el.textContent=t(key);
+ });
+ renderMenu();renderCart();renderTables();renderPoints();
+}
+function showCategory(cat){
+ category=cat;
+ ["food","drink","dessert"].forEach(c=>{
+  const b=$(c+"Tab");
+  b.className=c===cat?"active":"secondary";
+ });
+ renderMenu();
+}
+function renderMenu(){
+ $("menu").innerHTML="";
+ products.filter(p=>p.cat===category).forEach(p=>{
+  const name=p.name[lang]||p.name.en;
+  const card=document.createElement("article");
+  card.className="card";
+  let options="";
+  if(p.cat==="food"){
+   options=`<select class="spice"><option>ไม่เผ็ด / Not spicy</option><option>เผ็ดน้อย / Mild</option><option>เผ็ดปานกลาง / Medium</option><option>เผ็ดมาก / Hot</option></select>`;
+  } else if(p.cat==="drink"){
+   options=`<select class="size"><option>Regular</option><option>Large (+5,000 ₭)</option></select>
+   <select class="sweet"><option>ไม่หวาน / No sugar</option><option>หวานน้อย / Less sweet</option><option>หวาน 50% / 50%</option><option>หวาน 100% / 100%</option></select>`;
+  } else {
+   options=`<select class="extra"><option>ปกติ / Regular</option><option>เพิ่มท็อปปิง / Add topping (+5,000 ₭)</option></select>`;
+  }
+  card.innerHTML=`<div class="food-pic">${p.emoji}</div>
+   <h3>${name}</h3><div class="price">${money(p.price)} ₭</div>
+   ${options}<button class="primary">${t("add")}</button>`;
+  card.querySelector("button").onclick=()=>{
+   let detail=[];
+   card.querySelectorAll("select").forEach(s=>detail.push(s.value));
+   let extra=detail.some(v=>v.includes("+5,000"))?5000:0;
+   cart.push({id:p.id,name,price:p.price+extra,detail:detail.join(", ")});
+   renderCart();
+  };
+  $("menu").appendChild(card);
+ });
+}
+function renderCart(){
+ const area=$("cart");area.innerHTML="";
+ if(!cart.length){area.textContent=t("empty");}
+ cart.forEach((item,i)=>{
+  const row=document.createElement("div");row.className="cart-row";
+  row.innerHTML=`<div><strong>${item.name}</strong><div class="small">${item.detail}</div>${money(item.price)} ₭</div>`;
+  const btn=document.createElement("button");btn.className="secondary";btn.textContent=t("remove");
+  btn.onclick=()=>{cart.splice(i,1);renderCart();};
+  row.appendChild(btn);area.appendChild(row);
+ });
+ $("total").textContent=money(cart.reduce((s,x)=>s+x.price,0));
+}
+function renderTables(){
+ const zone=$("zone").value, area=$("tables");area.innerHTML="";
+ selectedTable="";
+ for(let i=1;i<=8;i++){
+  const btn=document.createElement("button");
+  btn.className="table-btn";
+  btn.textContent=(zone==="inside"?"IN":"OUT")+"-"+i;
+  btn.onclick=()=>{
+   selectedTable=btn.textContent;
+   document.querySelectorAll(".table-btn").forEach(x=>x.classList.remove("chosen"));
+   btn.classList.add("chosen");
+   $("selectedTable").textContent=selectedTable;
+  };
+  area.appendChild(btn);
+ }
+ $("selectedTable").textContent=t("notSelected");
+}
+function renderPoints(){$("points").textContent=points;}
+function saveOrders(){localStorage.setItem("seau_orders",JSON.stringify(orders));}
+function placeOrder(){
+ if(!cart.length){alert(t("empty"));return;}
+ if(!selectedTable){alert(t("choose"));return;}
+ const total=cart.reduce((s,x)=>s+x.price,0);
+ const earned=Math.floor(total/10000);
+ const order={
+  id:Date.now(),table:selectedTable,items:[...cart],total,
+  payment:$("payment").value,status:"received",time:new Date().toLocaleString()
+ };
+ orders.unshift(order);saveOrders();
+ points+=earned;localStorage.setItem("seau_points",points);
+ cart=[];renderCart();renderPoints();
+ alert(t("success")+" (+"+earned+")");
+}
+function redeem(){
+ if(points<20){alert(t("redeemNo"));return;}
+ points-=20;localStorage.setItem("seau_points",points);renderPoints();
+ alert(t("redeemYes"));
+}
+function renderStaff(){
+ const area=$("staffArea");area.classList.remove("hidden");area.innerHTML="";
+ if(!orders.length){area.textContent=t("empty");return;}
+ orders.forEach(order=>{
+  const card=document.createElement("div");card.className="card";card.style.marginTop="12px";
+  const heading=document.createElement("h3");heading.textContent="#"+order.id+" · "+order.table;
+  const detail=document.createElement("p");
+  detail.textContent=order.items.map(x=>x.name+" ("+x.detail+")").join(" / ")+" · "+money(order.total)+" ₭ · "+order.payment;
+  const status=document.createElement("p");status.textContent=t("status")+": "+t(order.status);
+  const select=document.createElement("select");
+  ["received","preparing","ready","served"].forEach(s=>{
+   const opt=document.createElement("option");opt.value=s;opt.textContent=t(s);if(order.status===s)opt.selected=true;select.appendChild(opt);
+  });
+  select.onchange=()=>{order.status=select.value;saveOrders();status.textContent=t("status")+": "+t(order.status);};
+  card.append(heading,detail,status,select);area.appendChild(card);
+ });
+}
+
+$("language").addEventListener("change",applyLanguage);
+["food","drink","dessert"].forEach(c=>$(c+"Tab").onclick=()=>showCategory(c));
+$("zone").onchange=renderTables;
+$("orderButton").onclick=placeOrder;
+$("redeemButton").onclick=redeem;
+$("staffButton").onclick=renderStaff;
+$("helpButton").onclick=()=>{
+ const msg=$("problem").value.trim();
+ if(!msg){$("helpResult").textContent=t("problem");return;}
+ $("helpResult").textContent=t("sent");
+ $("problem").value="";
+};
+applyLanguage();
+showCategory("food");
+</script>
+</body>
+</html>
