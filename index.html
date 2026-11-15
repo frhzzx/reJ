@@ -316,24 +316,139 @@ const translations = {
 };
 
 const products = [
- {id:1,cat:"food",emoji:"🍛",price:30000,
-  name:{th:"ข้าวผัดไก่",lo:"ເຂົ້າຜັດໄກ່",zh:"鸡肉炒饭",en:"Chicken fried rice",ko:"치킨 볶음밥"}},
- {id:2,cat:"food",emoji:"🍳",price:35000,
-  name:{th:"ข้าวกะเพราไก่",lo:"ເຂົ້າກະເພົາໄກ່",zh:"泰式罗勒鸡肉饭",en:"Thai basil chicken rice",ko:"바질 치킨 덮밥"}},
- {id:3,cat:"food",emoji:"🍜",price:30000,
-  name:{th:"ผัดซีอิ๊ว",lo:"ຜັດຊີອິ້ວ",zh:"泰式酱油炒面",en:"Stir-fried noodles",ko:"간장 볶음면"}},
- {id:4,cat:"drink",emoji:"🧋",price:20000,
-  name:{th:"ชาไทย",lo:"ຊາໄທ",zh:"泰式奶茶",en:"Thai milk tea",ko:"태국 밀크티"}},
- {id:5,cat:"drink",emoji:"🍵",price:22000,
-  name:{th:"มัทฉะลาเต้",lo:"ມັດຊະລາເຕ້",zh:"抹茶拿铁",en:"Matcha latte",ko:"말차 라떼"}},
- {id:6,cat:"drink",emoji:"🥤",price:25000,
-  name:{th:"โกโก้เย็น",lo:"ໂກໂກ້ເຢັນ",zh:"冰可可",en:"Iced cocoa",ko:"아이스 코코아"}},
- {id:7,cat:"dessert",emoji:"🍰",price:35000,
-  name:{th:"ชีสเค้ก",lo:"ຊີສເຄັກ",zh:"芝士蛋糕",en:"Cheesecake",ko:"치즈케이크"}},
- {id:8,cat:"dessert",emoji:"🍪",price:18000,
-  name:{th:"คุกกี้ช็อกโกแลต",lo:"ຄຸກກີ້ຊັອກໂກແລັດ",zh:"巧克力曲奇",en:"Chocolate cookies",ko:"초콜릿 쿠키"}},
- {id:9,cat:"dessert",emoji:"🍫",price:32000,
-  name:{th:"เค้กช็อกโกแลต",lo:"ເຄັກຊັອກໂກແລັດ",zh:"巧克力蛋糕",en:"Chocolate cake",ko:"초콜릿 케이크"}}
+  {
+    id: 1,
+    cat: "food",
+    image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+    price: 35000,
+    name:
+     { th: "ข้าวผัดไก่",
+      lo: "ເຂົ້າຜັດໄກ່",
+       zh: "鸡肉炒饭",
+        en: "Chicken fried rice",
+         ko: "치킨 볶음밥" }
+  },
+  {
+    id: 2,
+    cat: "food",
+    image:"https://images.unsplash.com/photo-1586128743915-ec7788189715?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+    price: 35000,
+    name: {
+       th: "ข้าวกะเพราไก่",
+        lo: "ເຂົ້າກະເພົາໄກ່",
+         zh: "泰式罗勒鸡肉饭",
+          en: "Chicken fried rice",
+           ko: "치킨 볶음밥"
+  }
+},
+ {
+  id:3,
+  cat:"food",
+ image:"https://images.unsplash.com/photo-1615750856719-9b7f225e9273?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+ price:35000,
+  name:{th:"ผัดซีอิ๊ว",lo:"ຜັດຊີອິ້ວ",zh:"泰式酱油炒面",en:"Stir-fried noodles",ko:"간장 볶음면"
+}
+},
+ {
+  id:4,
+  cat:"drink",
+  image:"https://images.unsplash.com/photo-1644203541701-0c534473e616?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+  price:25000,
+  name:{th:"ชาไทย",lo:"ຊາໄທ",zh:"泰式奶茶",en:"Thai milk tea",ko:"태국 밀크티"
+}
+},
+ {
+  id:5,
+  cat:"drink",
+  image:"https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+  price:30000,
+  name:{th:"มัทฉะลาเต้",lo:"ມັດຊະລາເຕ້",zh:"抹茶拿铁",en:"Matcha latte",ko:"말차 라떼"
+}
+},
+ {
+  id:6,
+  cat:"drink",
+  image:"https://images.unsplash.com/photo-1632595508805-bd7b9ce74173?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+  price:25000,
+  name:{th:"โกโก้",lo:"ໂກໂກ້",zh:"可可",en:"cocoa",ko:"코코아"
+}
+},
+ {
+  id:7,
+  cat:"dessert",
+  image:"https://images.unsplash.com/photo-1524351199678-941a58a3df50?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+  price:35000,
+  name:{th:"ชีสเค้ก",lo:"ຊີສເຄັກ",zh:"芝士蛋糕",en:"Cheesecake",ko:"치즈케이크"
+}
+},
+ {
+  id:8,
+  cat:"dessert",
+  image:"https://images.unsplash.com/photo-1519682214708-973477a2529a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+  price:15000,
+  name:{th:"คุกกี้ช็อกโกแลต",lo:"ຄຸກກີ້ຊັອກໂກແລັດ",zh:"巧克力曲奇",en:"Chocolate cookies",ko:"초콜릿 쿠키"
+}
+},
+ {
+  id:9,
+  cat:"dessert",
+  image:"https://images.unsplash.com/photo-1682596044365-eb5c3bc51555?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+  price:30000,
+  name:{th:"เค้กช็อกโกแลต",lo:"ເຄັກຊັອກໂກແລັດ",zh:"巧克力蛋糕",en:"Chocolate cake",ko:"초콜릿 케이크"
+}
+},
+{
+  id:10,
+  cat:"drink",
+  image:"https://images.unsplash.com/photo-1517959105821-eaf2591984ca?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+  price:30000,
+  name:{
+    th:"อเมริกาโน่",
+    lo:"ອາເມຣິກາໂນ",
+    zh:"美式咖啡",
+    en:"Americano",
+    ko:"아메리카노"
+  }
+},
+{
+  id:11,
+  cat:"drink",
+  image:"https://images.unsplash.com/photo-1596151163116-98a5033814c2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+  price:20000,
+  name:{
+    th:"นมสด",
+    lo:"ນົມສົດ",
+    zh:"鲜牛奶",
+    en:"Fresh Milk",
+    ko:"생우유"
+  }
+},
+{
+  id:12,
+  cat:"drink",
+  image:"https://plus.unsplash.com/premium_photo-1674327105074-46dd8319164b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+  price:35000,
+  name:{
+    th:"เอสเพรสโซ่",
+    lo:"ເອສເພຣສໂຊ",
+    zh:"浓缩咖啡",
+    en:"Espresso",
+    ko:"에스프레소"
+  }
+},
+{
+  id:13,
+  cat:"drink",
+  image:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+  price:30000,
+  name:{
+    th:"ลาเต้",
+    lo:"ລາເຕ້",
+    zh:"拿铁",
+    en:"late",
+    ko:"라떼"
+  }
+}
 ];
 
 let lang="th", category="food", cart=[], selectedTable="";
@@ -377,16 +492,35 @@ function renderMenu(){
   card.className="card";
   let options="";
   if(p.cat==="food"){
-   options=`<select class="spice"><option>ไม่เผ็ด / Not spicy</option><option>เผ็ดน้อย / Mild</option><option>เผ็ดปานกลาง / Medium</option><option>เผ็ดมาก / Hot</option></select>`;
+   options=`<select class="meat-option">
+    <option value="chicken">ไก่ / Chicken</option>
+    <option value="pork">หมู / Pork</option>
+    <option value="seafood">ทะเล / Seafood</option>
+    <select>
+    <select class="spice-option">
+    <option value="not spicy">ไม่เผ็ด / Not spicy</option>
+    <option value="less spicy">เผ็ดน้อย / Less spicy</option>
+    <option value="medium">เผ็ดปานกลาง / Medium</option>
+    <option value="hot">เผ็ดมาก / Hot</option>
+    <select>`;
   } else if(p.cat==="drink"){
-   options=`<select class="size"><option>Regular</option><option>Large (+5,000 ₭)</option></select>
+   options=`<select class="temp">
+      <option value="iced">เย็น / Iced</option>
+      <option value="no-ice">ไม่เย็น (ไม่ใส่น้ำแข็ง) / No ice</option>
+      <option value="hot">ร้อน / Hot</option>
+    </select>
+    <select class="size"><option>Regular</option><option>Large (+5,000 ₭)</option></select>
    <select class="sweet"><option>ไม่หวาน / No sugar</option><option>หวานน้อย / Less sweet</option><option>หวาน 50% / 50%</option><option>หวาน 100% / 100%</option></select>`;
   } else {
    options=`<select class="extra"><option>ปกติ / Regular</option><option>เพิ่มท็อปปิง / Add topping (+5,000 ₭)</option></select>`;
   }
-  card.innerHTML=`<div class="food-pic">${p.emoji}</div>
-   <h3>${name}</h3><div class="price">${money(p.price)} ₭</div>
-   ${options}<button class="primary">${t("add")}</button>`;
+  card.innerHTML = `
+  <div class="food-pic"><img src="${p.image}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"></div>
+  <h3>${name}</h3>
+  <div class="price">${money(p.price)} ₭</div>
+  ${options}
+  <button class="primary">${t("add")}</button>
+`;
   card.querySelector("button").onclick=()=>{
    let detail=[];
    card.querySelectorAll("select").forEach(s=>detail.push(s.value));
@@ -402,7 +536,7 @@ function renderCart(){
  if(!cart.length){area.textContent=t("empty");}
  cart.forEach((item,i)=>{
   const row=document.createElement("div");row.className="cart-row";
-  row.innerHTML=`<div><strong>${item.name}</strong><div class="small">${item.detail}</div>${money(item.price)} ₭</div>`;
+  row.innerHTML=`<img src="${item.image}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 8px;"><div><strong>${item.name}</strong><div class="small">${item.detail}</div>${money(item.price)} ₭</div>`;
   const btn=document.createElement("button");btn.className="secondary";btn.textContent=t("remove");
   btn.onclick=()=>{cart.splice(i,1);renderCart();};
   row.appendChild(btn);area.appendChild(row);
